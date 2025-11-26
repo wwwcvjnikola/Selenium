@@ -4,23 +4,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LogoutPage {
+public class ProfilePage {
 
     WebDriver driver;
 
-    WebElement logoutButton;
+    WebElement logOutButton;
 
-    public LogoutPage(WebDriver driver) {
+    public ProfilePage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public WebElement getLogoutButton() {
+    public WebElement getLogOutButton() {
         return driver.findElement(By.linkText("Log out"));
     }
+    // --------------------------------------------
 
-    // --------------------------------------------------
-
-    public void clickOnLogOutButton(){
-        getLogoutButton().click();
+    public void clickOnLogOutButton() {
+        getLogOutButton().click();
     }
 }
