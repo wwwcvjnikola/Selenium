@@ -5,9 +5,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 import java.util.Set;
@@ -85,7 +84,7 @@ public class Ponedeljak {
         // Zamisao je bila sledeca da probam da se registrujem pa da se logujem pod tim kredencijalima
         // kako bih dobio odredjene cookies-e a zatim da ih extract-ujem. Ali mi je ovo gore propalo tj
         // nisam uspeo da odradim registraciju plus login iz nekog razloga iako mi pise
-        // "process finished with exit code 0". 6 i po sati sam radio ovo samo sto se nisam obesio :)
+        // "process finished with exit code 0". 6 sati sam radio ovo samo sto se nisam obesio :)
 
         driver.findElement(By.id("userName")).sendKeys(validUserName);
         driver.findElement(By.id("password")).sendKeys(validPassword);
@@ -116,19 +115,35 @@ public class Ponedeljak {
 
 
     }
-
+    // test da sam logovan proveravam da li UserName field ima moj username
     @Test (priority = 10)
-    public void urlTest(){
-
+    public void usernameCheck() {
+        Assert.assertTrue(driver.findElement(By.id("userName-value")).getText().contains(validUserName));
     }
 
+    // da li je prisutno logout dugme
     @Test (priority = 20)
-    public void usernamecheck() {
-
+    public void logoutButtonCheck() {
+        Assert.assertTrue(driver.findElement(By.id("submit")).isDisplayed(), "Dugme nije prisutno!");
     }
 
+    // da li imamo search box koji se pojavi nakon logovanja
+    @Test (priority = 30)
+    public void searchBoxCheck(){
+        Assert.assertTrue(driver.findElement(By.id("searchBox")).isDisplayed());
+    }
 
+    @AfterMethod
+    public void logOutBtn() {
+        driver.findElement(By.id("submit")).click();
+    }
 
+    @AfterClass
+    public void quit(){
+        driver.quit();
+    }
 
-
+    // Svakako bih bio zahvalan za savet kako bih mogao da odradim i da li je ispravna ova zamisao
+    // koju sam ima gore u kodu. U sustini prekidalo mi je nakon skrola ali kao sto rekoh izbacivalo
+    // mi je "process finished with exit code 0". Probao sam i sa explicit wait ali mi nije uspelo
 }
